@@ -24,7 +24,7 @@ public class ArticleService {
     public void save(Article article) {
         articleRepository.save(article);
     }
-    public void deleteArticleById(Integer id){
+    public void removeArticleById(Integer id){
         articleRepository.deleteById(id);
     }
 

@@ -3,8 +3,6 @@ package com.eventeasy.EventEasy.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.IdentityHashMap;
-import java.util.Set;
 
 @Entity
 @Table (name = "users")

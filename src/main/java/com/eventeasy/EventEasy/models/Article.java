@@ -1,32 +1,32 @@
 package com.eventeasy.EventEasy.models;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
 @Entity
 @Table
+@EntityListeners(AuditingEntityListener.class)
 @Data
 public class Article {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "article_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private Integer id;
-    @Column (name = "article_name")
+
+    @Column
+    private String author;
+    @Column
     private String name;
-    // TODO
-//    @Column
-//    private String content;
     @CreatedDate
     @Temporal(TemporalType.DATE)
     @Column
     private LocalDate dateOfCreate;
-    @Column
-    private String author;
 
-    public Article() {
-    }
+    // TODO - ogranizer_ids, members_ids
+
 }

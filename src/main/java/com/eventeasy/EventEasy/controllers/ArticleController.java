@@ -4,11 +4,9 @@ import com.eventeasy.EventEasy.models.Article;
 import com.eventeasy.EventEasy.services.ArticleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
@@ -32,6 +30,13 @@ public class ArticleController {
         articleService.save(article);
         model.put("articles", articleService.getAllArticle());
         return "list-articles";
+    }
+    @DeleteMapping("/remove-articles/{id}")
+    public String removeEventById(
+            @PathVariable Integer id
+    ){
+        articleService.removeArticleById(id);
+        return "create-event-template";
     }
 
 }
