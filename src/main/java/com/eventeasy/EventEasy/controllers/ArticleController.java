@@ -31,12 +31,13 @@ public class ArticleController {
         model.put("articles", articleService.getAllArticle());
         return "list-articles";
     }
+
     @DeleteMapping("/remove-articles/{id}")
     public String removeEventById(
             @PathVariable Integer id
-    ){
+    ) {
         articleService.removeArticleById(id);
-        return "create-event-template";
+        return "list-articles";
     }
 
 }
