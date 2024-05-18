@@ -24,7 +24,9 @@ public class Event {
     @Column
     private String description;
 
-    @Column @CreatedDate
+    @CreatedDate
+    @Temporal(TemporalType.DATE)
+    @Column
     private LocalDate dateOfCreate;
 
     @Column
