@@ -1,11 +1,11 @@
 package com.eventeasy.EventEasy.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
-import java.util.IdentityHashMap;
 
 @Entity
 @Table
@@ -25,5 +25,8 @@ public class Article {
     @Column
     private LocalDate dateOfCreate;
     @Column
-    private Integer creator;
+    private String author;
+
+    public Article() {
+    }
 }

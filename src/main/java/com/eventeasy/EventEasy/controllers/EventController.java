@@ -3,10 +3,10 @@ package com.eventeasy.EventEasy.controllers;
 import com.eventeasy.EventEasy.models.Event;
 import com.eventeasy.EventEasy.services.EventService;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.valves.rewrite.InternalRewriteMap;
+import org.hibernate.persister.entity.SingleTableEntityPersister;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -44,6 +44,13 @@ public class EventController {
     public String listEvents(Map<String, Object> model) {
         model.put("events", eventService.getAllEvents());
         return "list-events";
+    }
+    @DeleteMapping("/remove-event/{id}")
+    public String removeEventById(
+            @PathVariable Integer id
+            ){
+        eventService.remove(id);
+        return "create-event-template";
     }
 
 }
