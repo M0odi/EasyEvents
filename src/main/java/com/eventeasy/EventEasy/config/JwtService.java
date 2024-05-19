@@ -9,10 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
+
 @Service
 public class JwtService {
     private final static String SECRET_KEY = "WKdAO3WKox0aKUbZP1zANU+bPg/DnI3m31FJn/jVA27ZWZqgND6id7yLfy6Z6zSt/2/+AIczcvUvtiOtkT+BPrAcTo61+6R4E6D+AaRARpXWdplcHmhgMOp0mXcyYD0QnzvoLuHRRJ+GoK5RWdPgSNYViPRzot3V3eMIcq/ViVN4txh5b4RjOPMn9ucChfQ4DPBCT1dquh1/aXZ+jJf5OWU5wQRhAYZKDBGEbEJ4uL+vBkYI/LZhk6ZLAtXNq7zY6TaGriW14flLd8T18qJwrqx71OdPEZDyv8iGcajAoLV8hw7kZvaGnFCX3NpG5Gc8b8csk1NwIdZ1ftpL4SZwkRDvHcNICtFy0aZSEEHkuM8=";
@@ -25,16 +24,23 @@ public class JwtService {
         return Jwts.parser()
                 .setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
     }
-
     public String generateToken(
-            Map<String, Objects> extraClaims, UserDetails userDetails
-    ) {
+            UserDetails userDetails
+    ){
+        return generateToken(Collections.emptyMap() , userDetails);
+    }
+
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        if (userDetails.getUsername() == null || userDetails.getUsername().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 24 минуты, если нужно 24 часа, умножьте на 60 * 24
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256) // Используйте ваш алгоритм и ключ
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 24 minutes
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -42,16 +48,19 @@ public class JwtService {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
-    private boolean isTokenExpire(String token){
+
+    private boolean isTokenExpire(String token) {
         return extractExpiration(token).before(new Date());
 
     }
-    private Date extractExpiration (String token){
+
+    private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+
     public boolean isTokenValidate(UserDetails userDetails, String token) {
         final String name = extractUserName(token);
-        return  (name.equals(userDetails.getUsername())) && !isTokenExpire(token);
+        return (name.equals(userDetails.getUsername())) && !isTokenExpire(token);
     }
 
     private Key getSigningKey() {

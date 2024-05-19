@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/api/v1")
 @AllArgsConstructor
 public class EventController {
 
@@ -40,7 +41,7 @@ public class EventController {
         return "create-event-template";
     }
 
-    @GetMapping("/list-events")
+    @GetMapping("/auth/list-events")
     public String listEvents(Map<String, Object> model) {
         model.put("events", eventService.getAllEvents());
         return "list-events";

@@ -27,16 +27,15 @@ public class User implements UserDetails {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name = "user_id")
     private Integer id;
-    @Column (name = "user_name")
-    private String name;
+    @Column (name = "login")
+    private String login;
     @Column
     private String email;
 
 
     @Column (name = "password")
     private String password;
-    @Column (name = "login")
-    private String login;
+
     //TODO
 /*    @Column (name = "family")
     private Set<User> family;*/
@@ -49,11 +48,11 @@ public class User implements UserDetails {
     }
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     @Override
@@ -75,4 +74,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
