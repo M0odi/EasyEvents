@@ -53,4 +53,9 @@ public class EventController {
         return "list-events";
     }
 
+    @GetMapping("/")
+    public String index() {
+        return "main-page";
+    }
+
 }
