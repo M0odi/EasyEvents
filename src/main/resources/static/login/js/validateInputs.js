@@ -1,3 +1,4 @@
+/*
 let loginInput = document.querySelector(".login-input");
 let emailInput = document.querySelector(".email-input");
 
@@ -83,3 +84,4 @@ function validatePassword() {
 
 }
 
+*/

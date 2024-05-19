@@ -31,16 +31,16 @@
             Введите свои данные для доступа к системк
         </p>
 
-        <form action="hi backman, what`s app? :3" class="login-form">
+        <form action="/auth/register" method="post" class="login-form">
 
             <div class="login-name">
                 <h2 class="input__name">Логин</h2>
-                <input type="text" class="input login-input" placeholder="">
+                <input type="text" name="login" class="input login-input" placeholder="">
             </div>
 
             <div class="email">
                 <h2 class="input__name">Почта</h2>
-                <input type="email" class="input email-input" placeholder="m@example.com">
+                <input type="email" name="email" class="input email-input" placeholder="m@example.com">
             </div>
 
             <div class="password">
@@ -49,17 +49,16 @@
                     <h2 class="input__name">Пароль</h2>
                 </div>
 
-                <input type="password" class="input password main-password">
+                <input type="password" name="password" class="input password main-password">
 
             </div>
-
-            <input type="button" class="input input-action" value="Зарегистрироваться">
+            <input type="submit" class="input input-action" value="Зарегистрироваться">
 
         </form>
 
 
         <p class="content__item-register">Уже есть аккаунт?
-            <a href="../templates/log-page.html" class="content__item-login-link">Войти</a>
+            <a href="../templates/log-page.mustache" class="content__item-login-link">Войти</a>
         </p>
 
     </div>

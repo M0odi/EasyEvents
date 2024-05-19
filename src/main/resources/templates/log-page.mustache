@@ -1,62 +1,40 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="/bootstrap/bootstrap-reboot.min.css">
-
     <link rel="stylesheet" href="/login/css/style.css">
     <link type="Image/x-icon" href="/login/icons/favicon.png" rel="icon">
-
-    <title>EasyEvent - создай своё событие здесь</title>
-
+    <title>EasyEvent - вход в систему</title>
 </head>
 <body>
-
 <div class="content">
-
     <div class="content__item">
         <img src="/login/img/background/background.png" alt="" class="background">
     </div>
-
     <div class="content__item content__item-main">
-
         <h1 class="content__item-title">Войти</h1>
-
         <p class="content__item-description">
             Введите свои данные для входа в систему
         </p>
-
-        <form action="hi backman, what`s app? :3" class="login-form">
-
+        <form action="/auth/authenticate" method="post" class="login-form">
             <div class="email">
                 <h2 class="input__name">Почта</h2>
-                <input type="email" class="input email" placeholder="m@example.com">
+                <input type="email" name="email" class="input email" placeholder="m@example.com">
             </div>
-
             <div class="password">
-
                 <div class="input__password_description">
                     <h2 class="input__name">Пароль</h2>
                 </div>
-
-                <input type="password" class="input password">
-
+                <input type="password" name="password" class="input password">
             </div>
-
             <input type="submit" class="input input-action" value="Войти">
-
         </form>
-
-
         <p class="content__item-register">Нет аккаунта?
-            <a href="../templates/reg-page.html" class="content__item-register-link">Зарегистрироваться</a>
+            <a href="/reg" class="content__item-register-link">Зарегистрироваться</a>
         </p>
-
     </div>
-
 </div>
-
 </body>
 </html>

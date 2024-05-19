@@ -47,6 +47,13 @@ public class Event {
             )
     )
     private Set<User> organizers;
+    @Column
+    private Integer amount ;
+
+    public Integer getAmount() {
+        return members.size() + organizers.size();
+    }
+
     @ManyToMany(
             cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}
     )

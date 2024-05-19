@@ -14,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.List;
+
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 
@@ -22,6 +24,14 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfiguration {
+    private static final String[] list = {
+            "/reg/**",
+            "signing/**",
+            "register/**",
+            "/auth/**",
+            "login/**","signing", "/greeting", "secured/create-event-template",
+            "secured/create-event", "/auth/list-events", "/static/**",
+            "/bootstrap/**", "/main-page/**", "/list-events/**"};
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
@@ -33,7 +43,7 @@ public class SecurityConfiguration {
                         new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
                 ))
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("auth/**", "/greeting", "secured/create-event-template", "secured/create-event", "/auth/list-events", "/static/**", "/bootstrap/**", "/main-page/**", "/list-events/**").permitAll()
+                        req.requestMatchers(list).permitAll()
                                 .requestMatchers("/secured").fullyAuthenticated()
                                 .anyRequest()
                                 .authenticated())
