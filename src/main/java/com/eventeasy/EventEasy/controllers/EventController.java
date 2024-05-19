@@ -51,7 +51,7 @@ public class EventController {
             @PathVariable Integer id
             ){
         eventService.remove(id);
-        return "create-event-template";
+        return "list-events";
     }
 
 }
