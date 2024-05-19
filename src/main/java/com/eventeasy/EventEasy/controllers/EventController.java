@@ -16,7 +16,7 @@ public class EventController {
 
     private final EventService eventService;
 
-    @PostMapping("secured/create-event")
+        @PostMapping("secured/create-event")
     public String createEvent(@RequestParam(name = "name") String name,
                               @RequestParam(name = "description") String description,
                               @RequestParam(name = "date_of_event") LocalDate dateOfEvent,
@@ -52,26 +52,14 @@ public class EventController {
         return "list-events";
     }
 
-    @GetMapping("/auth/main")
+    @GetMapping("/")
     public String index() {
-<<<<<<< HEAD
          return "redirect: greeting";
     }
-<<<<<<< HEAD
-    @GetMapping("/auth/greeting")
-    public ModelAndView welcome() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("main-page");
-        return modelAndView;
-=======
-    @GetMapping("/greeting")
-    public String greeting() {
-        return "main-page";
-=======
-         return "main-page";
->>>>>>> 5f17c76 (fed)
->>>>>>> fabc36435b5583ae47d65b8d11173267f73a9520
-    }
 
+    @GetMapping("/greeting")
+    public String welcome() {
+        return "main-page";
+    }
 
 }
