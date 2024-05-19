@@ -3,10 +3,9 @@ package com.eventeasy.EventEasy.controllers;
 import com.eventeasy.EventEasy.models.Event;
 import com.eventeasy.EventEasy.services.EventService;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.valves.rewrite.InternalRewriteMap;
-import org.hibernate.persister.entity.SingleTableEntityPersister;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -57,9 +56,11 @@ public class EventController {
     public String index() {
          return "redirect: greeting";
     }
-    @GetMapping("/greeting")
-    public String greeting() {
-        return "main-page";
+    @GetMapping("/auth/greeting")
+    public ModelAndView welcome() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("main-page");
+        return modelAndView;
     }
 
 }
