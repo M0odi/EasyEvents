@@ -1,5 +1,6 @@
 package com.eventeasy.EventEasy.config;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +35,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String jwt = authHeader.substring(7);
-        String userEmail = jwtService.extractUserName(jwt);
+        String userEmail = null;
+        try {
+            userEmail = jwtService.extractUserName(jwt);
+        }catch (ExpiredJwtException e){
+            logger.debug("token lifetime has expired");
+        }
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);

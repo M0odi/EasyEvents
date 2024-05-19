@@ -1,11 +1,14 @@
 package com.eventeasy.EventEasy.models;
 
+import jakarta.annotation.Priority;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -16,6 +19,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
+
     private Integer id;
 
     @Column
@@ -32,6 +36,21 @@ public class Event {
     @Column
     private LocalDate dateOfEvent;
 
-    // TODO - ogranizer_ids, members_ids
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+
+    )
+    @JoinTable(
+        name = "organizers_events",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "event_id", referencedColumnName = "id"
+            )
+    )
+    private Set<User> organizers;
+
 
 }
