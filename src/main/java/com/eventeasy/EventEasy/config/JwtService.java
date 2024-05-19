@@ -5,15 +5,21 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
+    @Value(value = "${jwt.lifetime}")
+    private int lifeTime;
     private final static String SECRET_KEY = "WKdAO3WKox0aKUbZP1zANU+bPg/DnI3m31FJn/jVA27ZWZqgND6id7yLfy6Z6zSt/2/+AIczcvUvtiOtkT+BPrAcTo61+6R4E6D+AaRARpXWdplcHmhgMOp0mXcyYD0QnzvoLuHRRJ+GoK5RWdPgSNYViPRzot3V3eMIcq/ViVN4txh5b4RjOPMn9ucChfQ4DPBCT1dquh1/aXZ+jJf5OWU5wQRhAYZKDBGEbEJ4uL+vBkYI/LZhk6ZLAtXNq7zY6TaGriW14flLd8T18qJwrqx71OdPEZDyv8iGcajAoLV8hw7kZvaGnFCX3NpG5Gc8b8csk1NwIdZ1ftpL4SZwkRDvHcNICtFy0aZSEEHkuM8=";
 
     public String extractUserName(String token) {
@@ -22,25 +28,29 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
-    }
-    public String generateToken(
-            UserDetails userDetails
-    ){
-        return generateToken(Collections.emptyMap() , userDetails);
+                .setSigningKey(getSigningKey())
+                .build().parseSignedClaims(token).getPayload();
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(
+            UserDetails userDetails
+    ) {
+        return generateToken(new HashMap<>(), userDetails);
+    }
+
+    public String generateToken(HashMap<String, Object> extraClaims, UserDetails userDetails) {
         if (userDetails.getUsername() == null || userDetails.getUsername().isEmpty()) {
             throw new IllegalArgumentException("Username cannot be null or empty");
         }
-
+        extraClaims.put("roles", userDetails.getAuthorities()
+                .stream().map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet())
+        );
         return Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) // 24 minutes
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .claims(extraClaims).subject(userDetails.getUsername()).
+                issuedAt(new Date(System.currentTimeMillis())).
+                expiration(new Date(System.currentTimeMillis() + Duration.ofMinutes(lifeTime).toMillis())) // Setting token lifetime to 30 minutes
+                .signWith(getSigningKey())
                 .compact();
     }
 

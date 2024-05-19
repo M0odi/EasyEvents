@@ -12,13 +12,12 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/api/v1")
 @AllArgsConstructor
 public class EventController {
 
     private final EventService eventService;
 
-    @PostMapping("/create-event")
+    @PostMapping("secured/create-event")
     public String createEvent(@RequestParam(name = "name") String name,
                               @RequestParam(name = "description") String description,
                               @RequestParam(name = "date_of_event") LocalDate dateOfEvent,
@@ -36,7 +35,7 @@ public class EventController {
         return "list-events";
     }
 
-    @GetMapping("/create-event-template")
+    @GetMapping("secured/create-event-template")
     public String createEventTemplate() {
         return "create-event-template";
     }
@@ -46,7 +45,7 @@ public class EventController {
         model.put("events", eventService.getAllEvents());
         return "list-events";
     }
-    @DeleteMapping("/remove-event/{id}")
+    @DeleteMapping("secured/remove-event/{id}")
     public String removeEventById(
             @PathVariable Integer id
             ){
