@@ -52,15 +52,26 @@ public class EventController {
         return "list-events";
     }
 
-    @GetMapping("/")
+    @GetMapping("/auth/main")
     public String index() {
+<<<<<<< HEAD
          return "redirect: greeting";
     }
+<<<<<<< HEAD
     @GetMapping("/auth/greeting")
     public ModelAndView welcome() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("main-page");
         return modelAndView;
+=======
+    @GetMapping("/greeting")
+    public String greeting() {
+        return "main-page";
+=======
+         return "main-page";
+>>>>>>> 5f17c76 (fed)
+>>>>>>> fabc36435b5583ae47d65b8d11173267f73a9520
     }
+
 
 }
