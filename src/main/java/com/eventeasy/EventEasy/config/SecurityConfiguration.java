@@ -34,13 +34,15 @@ public class SecurityConfiguration {
                         new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
                 ))
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("auth/**", "/greeting", "/static/**", "/bootstrap/**", "/main-page/**").permitAll()
+                        req.requestMatchers("/auth/**","/static/**","/main-page/**").permitAll()
                                 .requestMatchers("/secured").fullyAuthenticated()
                                 .anyRequest()
                                 .authenticated())
+
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
 
         return httpSecurity.build();
     }

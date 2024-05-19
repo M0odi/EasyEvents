@@ -53,13 +53,18 @@ public class EventController {
         return "list-events";
     }
 
-    @GetMapping("/")
+    @GetMapping("/auth/main")
     public String index() {
+<<<<<<< HEAD
          return "redirect: greeting";
     }
     @GetMapping("/greeting")
     public String greeting() {
         return "main-page";
+=======
+         return "main-page";
+>>>>>>> 5f17c76 (fed)
     }
+
 
 }
