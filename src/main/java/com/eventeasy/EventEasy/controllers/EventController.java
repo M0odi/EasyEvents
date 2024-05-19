@@ -55,6 +55,10 @@ public class EventController {
 
     @GetMapping("/")
     public String index() {
+         return "redirect: greeting";
+    }
+    @GetMapping("/greeting")
+    public String greeting() {
         return "main-page";
     }
 

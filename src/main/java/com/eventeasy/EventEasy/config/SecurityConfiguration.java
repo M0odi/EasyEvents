@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                         new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
                 ))
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("auth/**").permitAll()
+                        req.requestMatchers("auth/**", "/greeting").permitAll()
                                 .requestMatchers("/secured").fullyAuthenticated()
                                 .anyRequest()
                                 .authenticated())
