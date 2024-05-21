@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class UserController {
 
-    @GetMapping("/signing")
+    @GetMapping("/auth/signing")
     public ModelAndView signing() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("log-page");

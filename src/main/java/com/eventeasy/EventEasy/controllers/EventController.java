@@ -1,12 +1,12 @@
 package com.eventeasy.EventEasy.controllers;
 
 
+
 import com.eventeasy.EventEasy.services.EventService;
 import com.eventeasy.EventEasy.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -34,17 +34,12 @@ public class EventController {
         return "create-event-template";
     }
 
-    @GetMapping("/secured/list-events")
+    @GetMapping("/secured/event-list")
     public String listEvents(Map<String, Object> model) {
         model.put("events", eventService.getAllEvents());
         return "list-events";
     }
 
-    @PostMapping("/secured/add-member/{email}")
-    public String addMember(@PathVariable String email, @PathVariable Integer eventId) {
-        eventService.getEvent(eventId).getMembers().add(userService.getUserByEmail(email).orElseThrow());
-        return "list-events";
-    }
 
     @DeleteMapping("/secured/remove-event/{id}")
     public String removeEventById(
@@ -57,6 +52,16 @@ public class EventController {
     @GetMapping("")
     public String greeting() {
         return "main-page";
+    }
+    @PutMapping("/secured/add-member")
+    public String addMember(@RequestParam (name = "event_id")Integer eventId, @RequestParam (name = "email")String email){
+        eventService.addMember(eventId,email);
+        return "member was addwed";
+    }
+    @PutMapping("/secured/add-organizer")
+    public String addOrganizer(@RequestParam (name = "event_id")Integer eventId, @RequestParam (name = "email")String email){
+        eventService.addMember(eventId,email);
+        return "organizers was addwed";
     }
 
 
