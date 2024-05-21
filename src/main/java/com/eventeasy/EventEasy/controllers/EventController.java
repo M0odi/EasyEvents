@@ -1,6 +1,6 @@
 package com.eventeasy.EventEasy.controllers;
 
-import com.eventeasy.EventEasy.models.Event;
+
 import com.eventeasy.EventEasy.services.EventService;
 import com.eventeasy.EventEasy.services.UserService;
 import lombok.AllArgsConstructor;
@@ -24,16 +24,8 @@ public class EventController {
                               @RequestParam(name = "date_of_event") LocalDate dateOfEvent,
                               Map<String, Object> model) {
 
-        Event event = new Event();
-        event.setName(name);
-        event.setDescription(description);
-        event.setDateOfEvent(dateOfEvent);
-
-
-        eventService.save(event);
-
+        eventService.createEvent(name, description, dateOfEvent);
         model.put("events", eventService.getAllEvents());
-
         return "list-events";
     }
 
@@ -44,17 +36,16 @@ public class EventController {
 
     @GetMapping("/secured/list-events")
     public String listEvents(Map<String, Object> model) {
-        var allEvents = eventService.getAllEvents();
-        allEvents.forEach(e ->  e.setAmount(e.getOrganizers().size() + e.getMembers().size()));
-        model.put("events", allEvents);
-
+        model.put("events", eventService.getAllEvents());
         return "list-events";
     }
+
     @PostMapping("/secured/add-member/{email}")
-    public String addMember(@PathVariable String email, @PathVariable Integer eventId){
+    public String addMember(@PathVariable String email, @PathVariable Integer eventId) {
         eventService.getEvent(eventId).getMembers().add(userService.getUserByEmail(email).orElseThrow());
         return "list-events";
     }
+
     @DeleteMapping("/secured/remove-event/{id}")
     public String removeEventById(
             @PathVariable Integer id
@@ -63,28 +54,7 @@ public class EventController {
         return "list-events";
     }
 
-    @GetMapping("/signing")
-    public ModelAndView signing() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("log-page");
-        return modelAndView;
-    }
-
-    @GetMapping("/reg")
-    public ModelAndView register() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("reg-page");
-        return modelAndView;
-    }
-
-    @GetMapping("/auth/main-page")
-    public ModelAndView welcome() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("main-page");
-        return modelAndView;
-    }
-
-    @GetMapping("/greeting")
+    @GetMapping("")
     public String greeting() {
         return "main-page";
     }
