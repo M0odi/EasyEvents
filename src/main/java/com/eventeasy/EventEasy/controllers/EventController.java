@@ -2,9 +2,11 @@ package com.eventeasy.EventEasy.controllers;
 
 
 
+import com.eventeasy.EventEasy.models.User;
 import com.eventeasy.EventEasy.services.EventService;
 import com.eventeasy.EventEasy.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +32,7 @@ public class EventController {
     }
 
     @GetMapping("/secured/create-event-template")
-    public String createEventTemplate() {
+    public String createEventTemplate(@AuthenticationPrincipal User user) {
         return "create-event-template";
     }
 
