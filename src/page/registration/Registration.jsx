@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { request } from "../../axios_helper";
-import { getAuthToken } from "../../axios_helper";
+import { setAuthToken } from "../../axios_helper";
 import { useState } from "react";
 import '../../style/login/LoginForm.css'
 
@@ -18,7 +18,8 @@ const RegistrationForm = () => {
         email: email,
         login: login,
       });
-      if (getAuthToken) {
+      if (response.data !== null || response.data !== 'null') { 
+        setAuthToken(response.data);
         localStorage.setItem("authenticated", true);
         navigate("/user-profile");
       }

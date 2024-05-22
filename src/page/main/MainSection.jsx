@@ -1,5 +1,6 @@
 import React from 'react';
-import '../../style/main-page//main-section/main-section.css';
+import '../../style/main-page/main-section/main-section.css';
+import { Link } from 'react-router-dom';
 
 const MainSection = () => {
   return (
@@ -9,7 +10,7 @@ const MainSection = () => {
         <p className="main-section__description">
           Более сотни компаний выбрали нас в качестве менеджера своих мероприятий. <br /><br />Выбирай и ты.
         </p>
-        <a href="#" className="main-section__button">Организовать мероприятие</a>
+        <Link to = '/create-event'  className="main-section__button">Организовать мероприятие</Link>
       </div>
     </div>
   );

@@ -10,9 +10,9 @@ const Header = () => {
             EasyEvent
           </a>
           <nav className="header__nav">
-            <a href="#" className="nav__link">
+            <Link to='/event-list' className="nav__link">
               Мои мероприятия
-            </a>
+            </Link>
             <Link to="/sign-up" className="nav__link">
               Войти
             </Link>
