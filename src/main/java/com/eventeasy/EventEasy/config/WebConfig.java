@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 @Configuration
 public class WebConfig {
-    public static final String FRONTED_PORT = System.getenv("FRONTED_PORT");
+    public static final String FRONTED_PORT = "http://localhost:3000";
 
     @Bean
     public CorsFilter corsFilter() {

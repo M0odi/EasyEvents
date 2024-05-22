@@ -2,16 +2,17 @@ package com.eventeasy.EventEasy.controllers;
 
 
 
-import com.eventeasy.EventEasy.models.User;
+import com.eventeasy.EventEasy.dtos.EventDto;
+import com.eventeasy.EventEasy.dtos.UserDto;
 import com.eventeasy.EventEasy.services.EventService;
 import com.eventeasy.EventEasy.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -21,25 +22,23 @@ public class EventController {
     private final UserService userService;
 
     @PostMapping("/secured/create-event")
-    public String createEvent(@RequestParam(name = "name") String name,
-                              @RequestParam(name = "description") String description,
-                              @RequestParam(name = "date_of_event") LocalDate dateOfEvent,
-                              Map<String, Object> model) {
-
-        eventService.createEvent(name, description, dateOfEvent);
-        model.put("events", eventService.getAllEvents());
-        return "list-events";
+    public ResponseEntity<?> createEvent(
+            @RequestBody EventDto eventDto
+    ) {
+        eventService.createEvent(eventDto.getName(), eventDto.getDescription(), eventDto.getDateOfEvent());
+        return ResponseEntity.accepted().build();
     }
-
+/*
     @GetMapping("/secured/create-event-template")
     public String createEventTemplate(@AuthenticationPrincipal User user) {
         return "create-event-template";
-    }
+    }*/
 
     @GetMapping("/secured/event-list")
-    public String listEvents(Map<String, Object> model) {
-        model.put("events", eventService.getAllEvents());
-        return "list-events";
+    public ResponseEntity<List<EventDto>> listEvents(@RequestBody UserDto userDto) {
+        var user = userService.getUserByEmail(userDto.getEmail());
+        user.ifPresent(value -> ResponseEntity.ok((eventService.getAllEventsByUserId(value.getId()))));
+        return ResponseEntity.ok(Collections.emptyList());
     }
 
 

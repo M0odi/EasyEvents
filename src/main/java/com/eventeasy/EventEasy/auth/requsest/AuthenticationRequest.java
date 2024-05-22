@@ -5,7 +5,6 @@ import lombok.*;
 @Getter
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class AuthenticationRequest {
     private String email;

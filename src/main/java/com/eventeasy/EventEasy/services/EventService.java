@@ -1,10 +1,9 @@
 package com.eventeasy.EventEasy.services;
 
-import com.eventeasy.EventEasy.exception.EventNotFoundException;
+import com.eventeasy.EventEasy.exceptions.EventNotFoundException;
+import com.eventeasy.EventEasy.exceptions.SimpleResponse;
 import com.eventeasy.EventEasy.models.Event;
-import com.eventeasy.EventEasy.models.User;
 import com.eventeasy.EventEasy.repositories.EventRepository;
-import com.eventeasy.EventEasy.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,8 +29,8 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+    public List<Event> getAllEventsByUserId(Integer user_id) {
+        return eventRepository.findEventsByUserId(user_id);
     }
 
     public Event getEvent(int id) {
@@ -51,7 +50,7 @@ public class EventService {
             event.getMembers().add(userService.getUserByEmail(email).get());
             eventRepository.save(event);
         } else {
-            throw new EventNotFoundException(HttpStatus.BAD_REQUEST,"Event with ID " + event_id + " not found");
+            throw new EventNotFoundException(HttpStatus.BAD_REQUEST, SimpleResponse.builder().message("Event with ID " + event_id + " not found").build());
         }
     }
     public void addOrganizer(Integer event_id,String email){
@@ -63,7 +62,7 @@ public class EventService {
             event.getOrganizers().add(userService.getUserByEmail(email).get());
             eventRepository.save(event);
         } else {
-            throw new EventNotFoundException(HttpStatus.BAD_REQUEST,"Event with ID " + event_id + " not found");
+            throw new EventNotFoundException(HttpStatus.BAD_REQUEST, SimpleResponse.builder().message("Event with ID " + event_id + " not found").build());
         }
     }
 

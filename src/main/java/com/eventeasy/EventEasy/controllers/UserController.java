@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class UserController {
 
-    @GetMapping("/auth/signing")
+/*    @GetMapping("/auth/signing")
     public ModelAndView signing() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("log-page");
@@ -20,5 +20,6 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("reg-page");
         return modelAndView;
-    }
+    }*/
+
 }
