@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/auth/styles.css"> <!-- Adjust the path to match the actual location of the CSS file -->
+    <title>Authentication Page</title>
+</head>
+<body>
+<div id="app" class="content__item content__item-main">
+    <h1 class="content__item-title">Войти</h1>
+    <p class="content__item-description">Введите свои данные для входа в систему</p>
+    <form class="login-form" id="loginForm"> <!-- Added id="loginForm" -->
+        <div class="email">
+            <h2 class="input__name">Почта</h2>
+            <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="input email"
+                    placeholder="m@example.com"
+            />
+        </div>
+        <div class="password">
+            <div class="input__password_description">
+                <h2 class="input__name">Пароль</h2>
+            </div>
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    class="input password"
+            />
+        </div>
+        <input type="submit" class="input input-action" value="Войти" />
+    </form>
+    <p class="content__item-register">
+        Нет аккаунта?
+        <a href="/registration" class="content__item-register-link">
+            Зарегистрироваться
+        </a>
+    </p>
+</div>
+<script src="/auth/script.js"></script> <!-- Adjust the path to match the actual location of the JavaScript file -->
+</body>
+</html>
