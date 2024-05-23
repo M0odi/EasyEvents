@@ -7,10 +7,10 @@
 
     <link rel="stylesheet" href="/auth/bootstrap/bootstrap-reboot.min.css">
 
-    <link rel="stylesheet" href="/auth/create-event/eventcss/style.css">
-    <link rel="stylesheet" href="/auth/create-event/css/main-section/main-section.css">
-    <link rel="stylesheet" href="/auth/create-event/css/header/header.css">
-    <link rel="stylesheet" href="/auth/create-event/css/footer/footer.css">
+    <link rel="stylesheet" href="/auth/view-event/css/style.css">
+    <link rel="stylesheet" href="/auth/view-event/css/main-section/main-section.css">
+    <link rel="stylesheet" href="/auth/view-event/css/header/header.css">
+    <link rel="stylesheet" href="/auth/view-event/css/footer/footer.css">
 
     <link type="Image/x-icon" href="/auth/view-event/icons/favicon.png" rel="icon">
 
@@ -39,21 +39,22 @@
         </div>
     </header>
 
-    <div class="main-section" style="background-image: url(/auth/create-event/img/background.jpg);">
+    <div class="main-section" style="background-image: url(/auth/view-event/img/background.jpg);">
         <div class="container">
             <div class="main-section__inner">
 
-                <form action="/secured/create-event" method="post">
+                <div class="form" >
 
-                    <h1 class="main-section__title">Создай своё событие</h1>
+                    <h1 class="main-section__title">Мероприятие {{name}}</h1>
 
-                    <input class="input" type="text" name="name" placeholder="Название мероприятия"> <br> <br>
-                    <input class="input" type="text" name="description" placeholder="Описание мероприятия"> <br> <br>
-                    <input class="input" type="date" name="date_of_event"> <br> <br>
+                    <input class="input" type="text" name="name" value="{{name}}" readonly> <br> <br>
+                    <input class="input" type="text" name="description" value="{{description}}" readonly> <br> <br>
+                    <input class="input" type="date" value="2004-08-24" name="date_of_event" readonly> <br> <br>
 
-                    <input type="submit" class="submit-button" value="Создать">
+                    <a href="/" class="submit-button">Удалить</a>
+                    <a href="/" class="submit-button">Редактировать</a>
 
-                </form>
+                </div>
 
             </div>
         </div>
