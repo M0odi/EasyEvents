@@ -34,7 +34,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) throws Exception {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws IllegalArgumentException {
         if (request.getPassword() == null || request.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }

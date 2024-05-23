@@ -23,19 +23,16 @@ public class AuthenticationController {
 
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/login")
     public ResponseEntity<?> SignUp(@RequestBody AuthenticationRequest user) {
         try {
             String token = authenticationService.authenticate(user).getToken();
-
-            System.out.println("Retrieved token: " + token);
-
-
             return ResponseEntity.ok(token);
-        } catch (Exception e) {
+        }catch (IllegalArgumentException e){
             e.printStackTrace();
         }
-        return null;
+        return ResponseEntity.badRequest().build();
+
     }
     /*@GetMapping("/logout")
     public ResponseEntity<?> logout(){

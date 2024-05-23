@@ -29,8 +29,6 @@ public class User implements UserDetails {
     private String login;
     @Column
     private String email;
-
-
     @Column
     private String password;
 
@@ -40,7 +38,8 @@ public class User implements UserDetails {
 
     @ManyToMany(mappedBy = "organizers",fetch = FetchType.EAGER)
     private Set<Event> organizedEvents;
-
+    @ManyToMany(mappedBy = "members", fetch = FetchType.EAGER)
+    private Set<Event> memberEventList;
 
 
 

@@ -1,7 +1,9 @@
 package com.eventeasy.EventEasy.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -49,6 +51,10 @@ public class Event {
     private Set<User> organizers;
     @Column
     private Integer amount ;
+
+    public Event() {
+
+    }
 
     public Integer getAmount() {
         return members.size() + organizers.size();

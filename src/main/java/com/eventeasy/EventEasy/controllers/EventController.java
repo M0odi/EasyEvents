@@ -1,9 +1,13 @@
 package com.eventeasy.EventEasy.controllers;
 
 
-
+import com.eventeasy.EventEasy.auth.AuthenticationResponse;
+import com.eventeasy.EventEasy.config.JwtService;
 import com.eventeasy.EventEasy.dtos.EventDto;
-import com.eventeasy.EventEasy.dtos.UserDto;
+import com.eventeasy.EventEasy.dtos.UserAddDto;
+import com.eventeasy.EventEasy.models.Event;
+import com.eventeasy.EventEasy.models.User;
+import com.eventeasy.EventEasy.repositories.EventRepository;
 import com.eventeasy.EventEasy.services.EventService;
 import com.eventeasy.EventEasy.services.UserService;
 import lombok.AllArgsConstructor;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -20,6 +25,8 @@ public class EventController {
 
     private final EventService eventService;
     private final UserService userService;
+    private final JwtService jwtService;
+    private final EventRepository eventRepository;
 
     @PostMapping("/secured/create-event")
     public ResponseEntity<?> createEvent(
@@ -28,41 +35,45 @@ public class EventController {
         eventService.createEvent(eventDto.getName(), eventDto.getDescription(), eventDto.getDateOfEvent());
         return ResponseEntity.accepted().build();
     }
-/*
-    @GetMapping("/secured/create-event-template")
-    public String createEventTemplate(@AuthenticationPrincipal User user) {
-        return "create-event-template";
-    }*/
+
 
     @GetMapping("/secured/event-list")
-    public ResponseEntity<List<EventDto>> listEvents(@RequestBody UserDto userDto) {
-        var user = userService.getUserByEmail(userDto.getEmail());
-        user.ifPresent(value -> ResponseEntity.ok((eventService.getAllEventsByUserId(value.getId()))));
-        return ResponseEntity.ok(Collections.emptyList());
+    public ResponseEntity<List<Event>> listEvents(
+            @RequestBody AuthenticationResponse authenticationResponse) {
+       /* String email = jwtService.extractUserName(authenticationResponse.getToken());
+        var user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user.get().getMemberEventList().stream().map(EventDto::new).toList());*/
+        return ResponseEntity.ok(eventRepository.findAll());
     }
 
 
-    @DeleteMapping("/secured/remove-event/{id}")
-    public String removeEventById(
-            @PathVariable Integer id
+    @DeleteMapping("/secured/remove-event")
+    public ResponseEntity<?> removeEventById(
+            @RequestBody Integer id
     ) {
-        eventService.remove(id);
-        return "list-events";
+        return eventService.remove(id) ? ResponseEntity.status(200).build() : ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("")
-    public String greeting() {
-        return "main-page";
-    }
     @PutMapping("/secured/add-member")
-    public String addMember(@RequestParam (name = "event_id")Integer eventId, @RequestParam (name = "email")String email){
-        eventService.addMember(eventId,email);
-        return "member was addwed";
+    public ResponseEntity<?> addMember(
+            @RequestBody UserAddDto userAddDto
+    ) {
+        var user = userService.getUserByEmail(userAddDto.getEmail());
+        if (user.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(eventService.getEvent(userAddDto.getEvent_id()).getMembers().add(user.get()));
     }
+
     @PutMapping("/secured/add-organizer")
-    public String addOrganizer(@RequestParam (name = "event_id")Integer eventId, @RequestParam (name = "email")String email){
-        eventService.addMember(eventId,email);
-        return "organizers was addwed";
+    public ResponseEntity<?> addOrganizer(
+            @RequestBody UserAddDto userAddDto
+    ) {
+        var user = userService.getUserByEmail(userAddDto.getEmail());
+        if (user.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(eventService.getEvent(userAddDto.getEvent_id()).getOrganizers().add(user.get()));
     }
 
 

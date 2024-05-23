@@ -41,8 +41,8 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    public void remove(int id) {
-        eventRepository.deleteById(id);
+    public boolean remove(int id) {
+        return  eventRepository.readEventById(id);
     }
     public void addMember(Integer event_id,String email){
         Event event = eventRepository.findEventById(event_id);

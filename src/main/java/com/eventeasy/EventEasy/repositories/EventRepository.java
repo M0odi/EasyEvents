@@ -14,6 +14,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query("SELECT e FROM Event e JOIN e.members m WHERE m.id = :userId")
     List<Event> findEventsByUserId(@Param("userId") Integer userId);
     Event findById(int id);
-
+    boolean readEventById(int id);
     Event findEventById(Integer eventId);
 }
