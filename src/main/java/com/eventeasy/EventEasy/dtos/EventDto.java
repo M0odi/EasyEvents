@@ -11,13 +11,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Builder
-@NoArgsConstructor
 public class EventDto {
     private String name;
     private String description;
     private LocalDate dateOfEvent;
 
-
-    public EventDto(Event name) {
-    }
 }

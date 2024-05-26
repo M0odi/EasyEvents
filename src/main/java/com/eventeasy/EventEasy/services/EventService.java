@@ -28,7 +28,9 @@ public class EventService {
 
         eventRepository.save(event);
     }
-
+    public List<Event> getAllEvents(){
+        return eventRepository.findAll();
+    }
     public List<Event> getAllEventsByUserId(Integer user_id) {
         return eventRepository.findEventsByUserId(user_id);
     }
