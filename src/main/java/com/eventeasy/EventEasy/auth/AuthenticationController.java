@@ -34,8 +34,5 @@ public class AuthenticationController {
         return ResponseEntity.badRequest().build();
 
     }
-    /*@GetMapping("/logout")
-    public ResponseEntity<?> logout(){
 
-    }*/
 }

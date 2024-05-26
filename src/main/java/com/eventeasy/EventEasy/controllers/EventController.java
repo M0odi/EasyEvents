@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -35,12 +34,7 @@ public class EventController {
 
     @PostMapping("/secured/event-list")
     public ResponseEntity<List<EventDto>> listEvents(
-            @RequestBody String email
     ) {
-       /* var user = userService.getUserByEmail(email);
-        return user.map(value -> ResponseEntity.ok(value.getMemberEventList().stream().map(
-                x -> EventDto.builder().dateOfEvent(x.getDateOfEvent()).description(x.getDescription()).name(x.getName()).build()
-        ).toList())).orElseGet(() -> ResponseEntity.badRequest().build());*/
         return ResponseEntity.ok(eventService.getAllEvents().stream()
                 .map(x -> EventDto.builder()
                         .name(x.getName())
@@ -49,10 +43,6 @@ public class EventController {
                         .build())
                 .toList());
 
-    }
-    @GetMapping("")
-    public String mainPage(){
-        return "main-page";
     }
 
 
