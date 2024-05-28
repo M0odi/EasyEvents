@@ -1,5 +1,6 @@
 package com.eventeasy.EventEasy.services;
 
+import com.eventeasy.EventEasy.dtos.EventDto;
 import com.eventeasy.EventEasy.exceptions.EventNotFoundException;
 import com.eventeasy.EventEasy.exceptions.SimpleResponse;
 import com.eventeasy.EventEasy.models.Event;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -19,24 +21,21 @@ public class EventService {
     private final EventRepository eventRepository;
     private final UserService userService;
 
-    public void createEvent(String name, String description, LocalDate dateOfEvent){
-        Event event = new Event();
-        event.setName(name);
-        event.setDescription(description);
-        event.setDateOfEvent(dateOfEvent);
-
-
+    public void createEvent(Event event){
         eventRepository.save(event);
     }
     public List<Event> getAllEvents(){
         return eventRepository.findAll();
     }
-    public List<Event> getAllEventsByUserId(Integer user_id) {
-        return eventRepository.findEventsByUserId(user_id);
+    public List<Event> getAllEventsByUserEmail(String email) {
+        return eventRepository.findAllEventUser(email);
     }
 
     public Event getEvent(int id) {
         return eventRepository.findById(id);
+    }
+    public EventDto getEventDto(int id) {
+        return eventRepository.getEventById(id);
     }
 
     public void save(Event event) {
